@@ -6,11 +6,6 @@ export default function Accomodations() {
     //estado para verificar si el usuario esta autenticado
     const [isAuthenticated, setisAuthenticated] = useState(false)
 
-    //metodo para obtener la respuesta de la api
-    const fetchData = async () => {
-        const response = await getAccomodations() //si es un exito devolvera un arreglo de alojamientos
-        setAccomodations(response)
-    }
 
     useEffect(() => {
         //validamos si el token existe
@@ -24,6 +19,12 @@ export default function Accomodations() {
             setisAuthenticated(false)
         }
     }, [])
+
+    //metodo para obtener la respuesta de la api
+    const fetchData = async () => {
+        const response = await getAccomodations() //si es un exito devolvera un arreglo de alojamientos
+        setAccomodations(response)
+    }
 
     return (
         <div>

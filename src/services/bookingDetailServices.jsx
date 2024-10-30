@@ -17,4 +17,16 @@ const getBookings = async () => {
     }
 }
 
+//metodo para obtener una reserva en especifico
+const getBookingById = async (id) => {
+    try {
+        const dataResponse = await getBookings()
+        const oneBooking = dataResponse.find(booking => booking.id === id)
+        return oneBooking;
+    } catch (error) {
+        console.error("Error al obtener la reserva",error)
+        
+    }
+}
+
 export { getBookings }

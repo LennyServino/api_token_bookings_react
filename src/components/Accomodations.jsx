@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAccomodations } from '../services/accomodationServices'
+import BookingDetail from './BookingDetail'
 
 export default function Accomodations() {
     const [accomodations, setAccomodations] = useState([])
@@ -26,8 +27,15 @@ export default function Accomodations() {
         setAccomodations(response)
     }
 
+    //estado para abrir y cerrar el modal
+    const [isModalOpen, setModalOpen] = useState(false);
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
     return (
         <div>
+            <button onClick={openModal}>Abrir Modal</button>
+            <BookingDetail isOpen={isModalOpen} onClose={closeModal} />
             {/* validamos si la persona esta autenticada */}
             {
                 isAuthenticated ? (

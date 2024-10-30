@@ -11,10 +11,21 @@ const getAccomodations = async () => {
                 'Authorization': `Bearer ${token}`
             }
         });
+        
         return response.data;
     } catch (error) {
         console.error("Error al obtener los alojamientos",error)
     }
 }
 
-export { getAccomodations }
+const getAccomodationById = async (id) => {
+    try {
+        const dataAccomodationResponse = await getAccomodations()
+        const oneAccomodation = dataAccomodationResponse.find(accomodation => accomodation.id === id)
+        return oneAccomodation;
+    } catch (error) {
+        console.error("Error al obtener el alojamiento",error);
+    }
+}
+
+export { getAccomodations, getAccomodationById }

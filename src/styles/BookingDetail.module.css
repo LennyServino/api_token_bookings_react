@@ -1,3 +1,7 @@
+:root {
+    --secundary-color: #d8d9dc;
+}
+
 /* Modal.css */
 .modal_overlay {
     position: fixed;
@@ -15,13 +19,51 @@
 .modal_content {
     position: relative;
     background: white;
-    padding: 20px;
+    /* padding: 0 1.2rem; */
     border-radius: 5px;
     max-width: 500px;
     width: 100%;
 }
 
-.close_button {
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--secundary-color);
+    padding: 0 1.3rem;
+}
+
+.modal_header .close_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--secundary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s;
+
+    &:hover {
+        color: black;
+    }
+}
+
+.modal_body {
+    padding: 1.2rem;
+}
+
+.booking_info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.section_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* .close_button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -29,4 +71,4 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-}
+} */

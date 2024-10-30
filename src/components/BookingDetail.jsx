@@ -1,56 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { getBookings } from '../services/bookingDetailServices'
+import { getBookings, getBookingById } from '../services/bookingDetailServices'
 import styles from '../styles/BookingDetail.module.css'
+import { getAccomodationById } from '../services/accomodationServices'
+
+//importamos react icons
+import { FaClock } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 export default function BookingDetail({ isOpen, onClose }) {
-    const [bookings, setBookings] = useState([])
-
     //estado para guardar una reserva en especifico
     const [booking, setBooking] = useState({})
 
-    //metodo para obtener la respuesta de la api
-    const fetchDataBooking = async () => {
-        try {
-            const response = await getBookings() //si es un exito devolvera un arreglo de alojamientos
-            //console.log(response);
-            setBookings(response)
-            
-        } catch (error) {
-            console.error("Error al obtener las reservas", error)
-        }
-        
-    }
+    //estado para guardar un alojamiento en especifico
+    const [accomodation, setAccomodation] = useState({})
 
-    //metodo para filtrar y obtener una reserva en especifico
-    const getBookingById = (id) => {
-        const oneBooking = bookings.find(booking => booking.id === id)
-        console.log(oneBooking);
-        setBooking(oneBooking)
-    }
-
-
+    //useEffect para obtener la reserva en especifico
     useEffect(() => {
-        fetchDataBooking()
+        const fetchBookingById = async () => {
+            const bookingData = await getBookingById(2)
+            setBooking(bookingData)
+        }
+        fetchBookingById()
     }, [])
 
+    //useEffect para obtener el alojamiento en especifico
     useEffect(() => {
-        if (bookings.length > 0) {
-            getBookingById(2)
+        const fetchAccomodationById = async () => {
+            const accomodationData = await getAccomodationById(booking.accomodation_id)
+            setAccomodation(accomodationData)
+            //console.log(accomodation);
+            
         }
-    }, [bookings])
+        fetchAccomodationById()
+    }, [booking])
 
     if (!isOpen) return null
 
     return (
         <div className={styles.modal_overlay}>
             <div className={styles.modal_content}>
-                <button type='button' className={styles.close_button} onClick={onClose} >X</button>
-                <h2>Detalle de la reservacion</h2>
-                <div>
-                    <h3>{booking.id}</h3>
-                    <p>{booking.status}</p>
-                    <p>{booking.accomodation}</p>
-                    <p>{booking.user}</p>
+                <div className={styles.modal_header}>
+                    <h2>Detalle de la reservacion</h2>
+                    <button type='button' className={styles.close_button} onClick={onClose} >X</button>
+                </div>
+                <div className={styles.modal_body}>
+                    <section className={styles.booking_info}>
+                        <div>
+                            <p><FaClock /> {booking.status}</p>
+                            <p>{booking.accomodation}</p>
+                            <p><FaLocationDot /> {accomodation.address}</p>
+                        </div>
+                        <div>
+                            <p>ID: {booking.booking}</p>
+                        </div>
+                    </section>
+                    <section className={styles.section_image}>
+                        <img src={accomodation.image} alt=""/>
+                    </section>
                 </div>
             </div>
         </div>

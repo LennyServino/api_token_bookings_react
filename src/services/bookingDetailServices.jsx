@@ -29,4 +29,4 @@ const getBookingById = async (id) => {
     }
 }
 
-export { getBookings }
+export { getBookings, getBookingById }

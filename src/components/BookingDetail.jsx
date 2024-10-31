@@ -60,19 +60,31 @@ export default function BookingDetail({ isOpen, onClose }) {
                     <div className={styles.modal_body}>
                         <section className={styles.booking_info}>
                             <div>
-                                <p><FaClock /> {booking.status}</p>
-                                <p>{booking.accomodation}</p>
-                                <p><FaLocationDot /> { accomodation ?  accomodation.address : 'cargando...'}</p>
+                                <p className={styles.booking_status}><FaClock /> {booking.status}</p>
+                                <h3>{booking.accomodation}</h3>
+                                <div className={styles.booking_location}>
+                                    <div>
+                                        <FaLocationDot /> 
+                                    </div>
+                                    <div>
+                                        <p>{ accomodation.address }</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
+                            <div className={styles.box_id}>
                                 <p>ID: {booking.booking}</p>
                             </div>
                         </section>
                         <section className={styles.section_image}>
-                            {
-                                accomodation ? <img src={accomodation.image} alt=""/> 
-                                : 'cargando...'
-                            }
+                                <img src={accomodation.image} alt="accomodation image" /> 
+                        </section>
+                        <section className={styles.guest_information}>
+                            <div>
+                                <p>Check-in</p>
+                            </div>
+                            <div>
+                                <p>Check-out</p>
+                            </div>
                         </section>
                     </div>
                 }

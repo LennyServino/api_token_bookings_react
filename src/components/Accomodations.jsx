@@ -33,7 +33,7 @@ export default function Accomodations() {
     const closeModal = () => setModalOpen(false);
 
     return (
-        <div>
+        <div style={{background: 'black'}}>
             <button onClick={openModal}>Abrir Modal</button>
             <BookingDetail isOpen={isModalOpen} onClose={closeModal} />
             {/* validamos si la persona esta autenticada */}

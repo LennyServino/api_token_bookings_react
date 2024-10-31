@@ -11,7 +11,7 @@ export const NewBookingModal = ({ onClose }) => {
   const [guest, setGuest] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [totalAmount, setTotalAmount] = useState(500);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const fetchData = async () => {
     const response = await getAccomodations();
@@ -64,7 +64,12 @@ export const NewBookingModal = ({ onClose }) => {
 
         <label className="label">
           Alojamiento:
-          <select className="select-input" placeholder="Seleccione alojamiento">
+          <select
+            className="select-input"
+            placeholder="Seleccione alojamiento"
+            onChange={(e) => setSelectedAccomodation(e.target.value)}
+            value={selectedAccomodation}
+          >
             {accomodations.map((item) => (
               <option key={item.id} value={item.name}>
                 {item.name}
@@ -81,6 +86,8 @@ export const NewBookingModal = ({ onClose }) => {
             name="guest"
             placeholder="Ingrese nombre de huésped"
             required
+            onChange={(e) => setGuest(e.target.value)}
+            value={guest}
           />
         </label>
 
@@ -92,11 +99,20 @@ export const NewBookingModal = ({ onClose }) => {
               className="date-input"
               name="startDate"
               required
+              onChange={(e) => setStartDate(e.target.value)}
+              value={startDate}
             />
           </label>
           <label className="label">
             Fecha de fin:
-            <input type="date" className="date-input" name="endDate" required />
+            <input
+              type="date"
+              className="date-input"
+              name="endDate"
+              required
+              onChange={(e) => setEndDate(e.target.value)}
+              value={endDate}
+            />
           </label>
         </div>
 
@@ -108,6 +124,8 @@ export const NewBookingModal = ({ onClose }) => {
             name="totalAmount"
             placeholder="Ingrese monto total"
             required
+            onChange={(e) => setTotalAmount(e.target.value)}
+            value={totalAmount}
           />
         </label>
 
@@ -115,7 +133,7 @@ export const NewBookingModal = ({ onClose }) => {
           <button className="cancel-button" onClick={onClose}>
             Cancelar
           </button>
-          <button className="accept-button" onClick={onClose}>
+          <button className="accept-button" onClick={handleSave}>
             Guardar
           </button>
         </div>

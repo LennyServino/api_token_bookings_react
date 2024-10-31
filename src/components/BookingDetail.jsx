@@ -54,7 +54,7 @@ export default function BookingDetail({ isOpen, onClose }) {
                     <button type='button' className={styles.close_button} onClick={onClose} >X</button>
                 </div>
                 {
-                    //si loading es true no muestro el body del modal
+                    //si accomodation esta vacio no muestro el body del modal
                     !accomodation ? <LoadingSpinner />
                     :   
                     <div className={styles.modal_body}>

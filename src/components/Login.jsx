@@ -21,7 +21,7 @@ export default function Login() {
         
         //validar que si existe el token
         if(sessionStorage.getItem('token_bookings')) {
-            navigate('/reserva')
+            navigate('/alojamientos')
         }
 
         console.log(response);

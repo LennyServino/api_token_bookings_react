@@ -3,6 +3,7 @@
     --subtitle-color: #4B5563;
 }
 
+
 /* Modal.css */
 .modal_overlay {
     position: fixed;
@@ -20,10 +21,10 @@
 .modal_content {
     position: relative;
     background: white;
-    /* padding: 0 1.2rem; */
     border-radius: 5px;
-    max-width: 500px;
+    max-width: 31.25rem;
     width: 100%;
+    font-size: .5rem;
 }
 
 .modal_header {
@@ -32,6 +33,7 @@
     align-items: center;
     border-bottom: 1px solid var(--secundary-color);
     padding: 0 1.3rem;
+    font-size: 1rem;
 }
 
 .modal_header .close_button {
@@ -49,7 +51,7 @@
 }
 
 .modal_body {
-    padding: 1.2rem;
+    padding: 0 1.2rem;
 }
 
 .booking_info {
@@ -60,7 +62,7 @@
 .booking_status {
     display: flex;
     width: 50%;
-    font-size: .8rem;
+    font-size: .7rem;
     background-color: #FEF9C3;
     color: #854D0E;
     border-radius: 10px;
@@ -69,7 +71,8 @@
     gap: .3rem;
 }
 
-h3 {
+.booking_info h3 {
+    font-size: 1rem;
     margin: 0;
     padding: 0 .4rem;
 }
@@ -78,6 +81,7 @@ h3 {
     text-align: end;
     font-size: .9rem;
     color: #6B7280;
+    padding: 0 .5rem;
 }
 
 .booking_location {
@@ -85,6 +89,8 @@ h3 {
     grid-template-columns: .1fr 1fr;
     color: var(--subtitle-color);
     align-items: center;
+    font-size: .9rem;
+    margin-bottom: 0;
 }
 
 .booking_location svg {
@@ -92,26 +98,166 @@ h3 {
     padding: 0 .5rem;
 }
 
+.section_image {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .section_image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 5px;
-    margin-top: 1rem;
 }
 
 .guest_information {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0 .3rem;
+}
+
+.guest_information .guest_title {
+    color: var(--subtitle-color);
+    font-weight: 400;
+    line-height: 20px;
+    font-size: .8rem;
+}
+
+.guest_check {
+    display: grid;
+    grid-template-columns: .1fr 1fr;
+    color: var(--subtitle-color);
+    align-items: center;
+    font-size: .8rem;
+}
+
+.guest_check p {
+    color: #000;
+    margin: 0;
+}
+
+.user_data {
+    padding: 0 .3rem;
+    margin-top: 1rem;
+}
+
+.user_data h3 {
+    font-weight: 400;
+    font-size: 1rem;
+    margin: .5rem 0 .5rem 0;
+}
+
+.user_data p {
+    color: var(--subtitle-color);
+    font-size: .8rem;
+}
+
+.user_data svg{
+    vertical-align: top;
+}
+
+.sumary_stay {
+    background-color: #EFF6FF;
+    padding: .2rem .8rem;
+    border-radius: 10px;
+}
+
+.sumary_stay h3 {
+    font-size: .9rem;
+    margin: 0;
+}
+
+.sumary_stay p {
+    color: #1E40AF;
+    font-size: .8rem;
+    margin: .5rem 0;
+}
+
+.sumary_stay svg {
+    vertical-align: bottom;
+    margin-right: .2rem;
+}
+
+.modal_footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-top: 1px solid var(--secundary-color);
+    padding: 1rem;
     gap: 1rem;
 }
 
-/* .close_button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
+.modal_footer button {
+    color: white;
     border: none;
-    font-size: 20px;
+    border-radius: 5px;
+    padding: .5rem 1rem;
     cursor: pointer;
-} */
+    font-size: .9rem;
+    transition: background-color 0.3s;
+}
+
+.modal_footer .cancel_button {
+    background-color: #E53E3E;
+
+    &:hover {
+        background-color: #C53030;
+    }
+}
+
+.modal_footer .close_button {
+    background-color: var(--secundary-color);
+    color: #374151;
+
+    &:hover {
+        background-color: #E2E8F0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .modal_content {
+        max-width: 95%;
+    }
+
+    .booking_info {
+        grid-template-columns: 1fr;
+    }
+
+    .booking_info h3 {
+        text-align: center;
+    }
+
+    .box_id {
+        text-align: left;
+        padding: 0 .5rem;
+    }
+
+    .booking_status {
+        width: 100%;
+    }
+
+    .booking_location {
+        justify-content: center;
+    }
+
+    .section_image {
+        max-height: 150px;
+    }
+
+    .guest_check {
+        justify-content: center;
+        gap: .5rem;
+    }
+
+    .guest_information h3 {
+        text-align: center;
+    }
+
+    .user_data {
+        margin: 2rem 0;
+    }
+}

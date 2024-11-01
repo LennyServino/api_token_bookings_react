@@ -29,4 +29,26 @@ const getBookingById = async (id) => {
     }
 }
 
-export { getBookings, getBookingById }
+//formatear fechas de la reserva
+const formatDate = (fechaISO) => {
+    if (!fechaISO) return '';
+    const myDate = new Date(fechaISO);
+    return new Intl.DateTimeFormat('es-ES', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    }).format(myDate);
+};
+
+// calcular las noches entre dos fechas
+const calculateNightsBetweenDates = (startDate, endDate) => {
+    if (!startDate || !endDate) return 0;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const differenceInMilliseconds = end - start;
+    const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+    const differenceInNights = differenceInDays - 1;
+    return differenceInNights;
+};
+
+export { getBookings, getBookingById, formatDate, calculateNightsBetweenDates };

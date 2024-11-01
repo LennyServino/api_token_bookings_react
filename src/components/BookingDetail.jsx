@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getBookings, getBookingById } from '../services/bookingDetailServices'
+import { getBookings, getBookingById, formatDate, calculateNightsBetweenDates } from '../services/bookingDetailServices'
 import styles from '../styles/BookingDetail.module.css'
 import { getAccomodationById } from '../services/accomodationServices'
 import LoadingSpinner from './LoadingSpinner';
@@ -7,6 +7,8 @@ import LoadingSpinner from './LoadingSpinner';
 //importamos react icons
 import { FaClock } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { FaCalendarAlt, FaMoon } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 
 export default function BookingDetail({ isOpen, onClose }) {
@@ -56,37 +58,70 @@ export default function BookingDetail({ isOpen, onClose }) {
                 {
                     //si accomodation esta vacio no muestro el body del modal
                     !accomodation ? <LoadingSpinner />
-                    :   
-                    <div className={styles.modal_body}>
-                        <section className={styles.booking_info}>
-                            <div>
-                                <p className={styles.booking_status}><FaClock /> {booking.status}</p>
-                                <h3>{booking.accomodation}</h3>
-                                <div className={styles.booking_location}>
-                                    <div>
-                                        <FaLocationDot /> 
-                                    </div>
-                                    <div>
-                                        <p>{ accomodation.address }</p>
+                    :
+                    <>
+                        <div className={styles.modal_body}>
+                            <section className={styles.booking_info}>
+                                <div>
+                                    <p className={styles.booking_status}><FaClock /> {booking.status}</p>
+                                    <h3>{booking.accomodation}</h3>
+                                    <div className={styles.booking_location}>
+                                        <div>
+                                            <FaLocationDot /> 
+                                        </div>
+                                        <div>
+                                            <p>{ accomodation.address }</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className={styles.box_id}>
-                                <p>ID: {booking.booking}</p>
-                            </div>
-                        </section>
-                        <section className={styles.section_image}>
-                                <img src={accomodation.image} alt="accomodation image" /> 
-                        </section>
-                        <section className={styles.guest_information}>
-                            <div>
-                                <p>Check-in</p>
-                            </div>
-                            <div>
-                                <p>Check-out</p>
-                            </div>
-                        </section>
-                    </div>
+                                <div className={styles.box_id}>
+                                    <p>ID: {booking.booking}</p>
+                                </div>
+                            </section>
+                            <section className={styles.section_image}>
+                                    <img src={accomodation.image} alt="accomodation image" /> 
+                            </section>
+                            <section className={styles.guest_information}>
+                                <div>
+                                    <p className={styles.guest_title}>Check-in</p>
+                                    <div className={styles.guest_check}>
+                                        <div>
+                                            <FaCalendarAlt /> 
+                                        </div>
+                                        <div>
+                                            <p>{ formatDate(booking.check_in_date) }</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div>
+                                    <p className={styles.guest_title}>Check-out</p>
+                                    <div className={styles.guest_check}>
+                                        <div>
+                                            <FaCalendarAlt /> 
+                                        </div>
+                                        <div>
+                                            <p>{ formatDate(booking.check_out_date) }</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section className={styles.user_data}>
+                                <div>
+                                    <h3>Informacion del Huésped</h3>
+                                    <p><FaUser /> {booking.user}</p>
+                                </div>
+                            </section>
+                            <section className={styles.sumary_stay}>
+                                <h3>Resumen de la estancia</h3>
+                                <p><FaMoon /> {calculateNightsBetweenDates(booking.check_in_date, booking.check_out_date)}</p>
+                            </section>
+                        </div>
+                        <div className={styles.modal_footer}>
+                            <button className={styles.cancel_button}>Cancelar Reservación</button>
+                            <button className={styles.close_button} onClick={onClose}>Cerrar</button>
+                        </div>
+                    </>   
                 }
             </div>
         </div>

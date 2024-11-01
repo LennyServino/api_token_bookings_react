@@ -1,0 +1,73 @@
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: auto; /* Centrar el formulario en la página */
+    padding: 20px;
+    border: 1px solid #ccc; /* Borde del formulario */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+h2 {
+    margin-bottom: 10px; /* Espaciado inferior del título */
+}
+
+.linea {
+    width: 100%; /* Ancho completo */
+    border: none; /* Sin borde */
+    height: 2px; /* Altura de la línea */
+    background-color: black; /* Color de la línea */
+}
+
+.campo {
+    width: 100%; /* Ancho completo */
+    margin-bottom: 35px; /* Espaciado entre campos */
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+input[type="file"] {
+    display: block; /* Mostrar el input de archivo como bloque */
+}
+
+label {
+    display: block; /* Mostrar la etiqueta como bloque */
+    margin-bottom: 5px; /* Espaciado inferior para la etiqueta */
+}
+
+textarea {
+    resize: none; /* Deshabilitar el redimensionado del textarea */
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between; /* Alinear botones a los extremos */
+    width: 100%; /* Asegurar que ocupen el ancho completo */
+}
+
+button {
+    padding: 10px 15px; /* Espaciado interno del botón */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #28a745; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+}
+
+button:hover {
+    background-color: #218838; /* Color más oscuro al pasar el mouse */
+}
+
+.error {
+    color: red; /* Color rojo para el mensaje de error */
+    margin-bottom: 15px; /* Espaciado inferior */
+}

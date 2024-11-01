@@ -11,7 +11,7 @@ import { FaCalendarAlt, FaMoon } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 
 
-export default function BookingDetail({ isOpen, onClose }) {
+export default function BookingDetail({ isOpen, onClose, bookingId }) {
     //estado para guardar una reserva en especifico
     const [booking, setBooking] = useState({})
 
@@ -22,7 +22,7 @@ export default function BookingDetail({ isOpen, onClose }) {
     useEffect(() => {
         const fetchBookingById = async () => {
             try {
-                const bookingData = await getBookingById(2)
+                const bookingData = await getBookingById(bookingId)
                 setBooking(bookingData)
             } catch (error) {
                 console.error(error)

@@ -35,9 +35,9 @@ export default function Accomodations() {
     return (
         <div style={{background: 'black'}}>
             <button onClick={openModal}>Abrir Modal</button>
-            <BookingDetail isOpen={isModalOpen} onClose={closeModal} />
+            <BookingDetail isOpen={isModalOpen} onClose={closeModal} bookingId={2} />
             {/* validamos si la persona esta autenticada */}
-            {/* {
+            {
                 isAuthenticated ? (
                     <>
                         <h1>Lista de alojamientos</h1>
@@ -57,7 +57,7 @@ export default function Accomodations() {
                         </div>
                     </>
                 ) : <h2>No estas autorizado, inicia sesion</h2>
-            } */}
+            }
         </div>
     )
 }

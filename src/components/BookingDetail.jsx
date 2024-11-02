@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getBookings, getBookingById, formatDate, calculateNightsBetweenDates } from '../services/bookingDetailServices'
+import { getBookings, getBookingById, formatDate, calculateNightsBetweenDates, updateBookingStatus } from '../services/bookingDetailServices'
 import styles from '../styles/BookingDetail.module.css'
 import { getAccomodationById } from '../services/accomodationServices'
 import LoadingSpinner from './LoadingSpinner';

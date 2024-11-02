@@ -17,6 +17,19 @@ const getBookings = async (token) => {
     }
 }
 
+const updateBookingStatus = async (id, status, token) => {
+    try {
+        const responseUpdateStatus = await axios.put(`https://apibookingsaccomodations-production.up.railway.app/api/V1/status_booking/${id}`, { status }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return responseUpdateStatus.data;
+    } catch (error) {
+        console.error("Error al actualizar la reserva",error)
+    }
+}
+
 //metodo para obtener una reserva en especifico
 const getBookingById = async (id, token) => {
     try {
@@ -50,4 +63,4 @@ const calculateNightsBetweenDates = (startDate, endDate) => {
     return differenceInNights;
 };
 
-export { getBookings, getBookingById, formatDate, calculateNightsBetweenDates };
+export { getBookings, getBookingById, formatDate, calculateNightsBetweenDates, updateBookingStatus };

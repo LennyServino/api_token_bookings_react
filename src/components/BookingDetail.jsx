@@ -20,12 +20,15 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
 
     const [isLoading, setIsLoading] = useState(true)
 
+    const [token, setToken] = useState('')
+
     useEffect(() => {
+        if (!isOpen) return;
         const interval = setInterval(() => {
             const sessionToken = sessionStorage.getItem('token_bookings');
 
             if (sessionToken) {
-                //setIsAuthenticated(true);
+                setToken(sessionToken);
                 fetchBookingData(sessionToken);
                 clearInterval(interval);
             } else {
@@ -33,10 +36,11 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
             }
         }, 100);
         return () => clearInterval(interval);
-    }, []);
+    }, [isOpen]);
 
     const fetchBookingData = async (token) => {
         try {
+            setIsLoading(true);
             const bookingData = await getBookingById(bookingId, token);
             setBooking(bookingData);
             
@@ -48,6 +52,27 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
             console.error(error);
         }
     };
+
+    const handleUpdateStatus = async () => {
+        try {
+            const response = await updateBookingStatus(bookingId, "CANCELLED", token);
+            
+            if (response?.message) {
+                alert("Reservación cancelada", response.message);
+                console.log(response);
+                //actualizamos el estado de la reserva
+                setBooking({
+                    ...booking,
+                    status: "CANCELLED"
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            
+        }
+    }
+
+    
 
     if (!isOpen) return null
 
@@ -117,11 +142,11 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
                             </section>
                             <section className={styles.sumary_stay}>
                                 <h3>Resumen de la estancia</h3>
-                                <p><FaMoon /> {calculateNightsBetweenDates(booking.check_in_date, booking.check_out_date)}</p>
+                                <p><FaMoon /> {calculateNightsBetweenDates(booking.check_in_date, booking.check_out_date)} Noches</p>
                             </section>
                         </div>
                         <div className={styles.modal_footer}>
-                            <button className={styles.cancel_button}>Cancelar Reservación</button>
+                            <button className={styles.cancel_button} onClick={handleUpdateStatus}>Cancelar Reservación</button>
                             <button className={styles.close_button} onClick={onClose}>Cerrar</button>
                         </div>
                     </>   

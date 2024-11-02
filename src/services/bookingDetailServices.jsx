@@ -19,7 +19,7 @@ const getBookings = async (token) => {
 
 const updateBookingStatus = async (id, status, token) => {
     try {
-        const responseUpdateStatus = await axios.put(`https://apibookingsaccomodations-production.up.railway.app/api/V1/status_booking/${id}`, { status }, {
+        const responseUpdateStatus = await axios.patch(`https://apibookingsaccomodations-production.up.railway.app/api/V1/status_booking/${id}`, { status }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

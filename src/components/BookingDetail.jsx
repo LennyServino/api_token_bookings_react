@@ -18,35 +18,38 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
     //estado para guardar un alojamiento en especifico
     const [accomodation, setAccomodation] = useState({})
 
-    //useEffect para obtener la reserva en especifico
-    useEffect(() => {
-        const fetchBookingById = async () => {
-            try {
-                const bookingData = await getBookingById(bookingId)
-                setBooking(bookingData)
-            } catch (error) {
-                console.error(error)
-            } 
-        }
-        fetchBookingById()
-    }, [])
+    const [isLoading, setIsLoading] = useState(true)
 
-    //useEffect para obtener el alojamiento en especifico
     useEffect(() => {
-        const fetchAccomodationById = async () => {
-            try {
-                const accomodationData = await getAccomodationById(booking.accomodation_id)
-                setAccomodation(accomodationData)
-                //console.log(accomodation);
-            } catch (error) {
-                console.error(error)
-            } 
+        const interval = setInterval(() => {
+            const sessionToken = sessionStorage.getItem('token_bookings');
+
+            if (sessionToken) {
+                //setIsAuthenticated(true);
+                fetchBookingData(sessionToken);
+                clearInterval(interval);
+            } else {
+                setIsAuthenticated(false);
+            }
+        }, 100);
+        return () => clearInterval(interval);
+    }, []);
+
+    const fetchBookingData = async (token) => {
+        try {
+            const bookingData = await getBookingById(bookingId, token);
+            setBooking(bookingData);
+            
+            const accomodationData = await getAccomodationById(bookingData.accomodation_id, token);
+            setAccomodation(accomodationData);
+            
+            setIsLoading(false);
+        } catch (error) {
+            console.error(error);
         }
-        fetchAccomodationById()
-    }, [booking])
+    };
 
     if (!isOpen) return null
-
 
     return (
         <div className={styles.modal_overlay}>
@@ -57,7 +60,7 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
                 </div>
                 {
                     //si accomodation esta vacio no muestro el body del modal
-                    !accomodation ? <LoadingSpinner />
+                    isLoading ? <LoadingSpinner />
                     :
                     <>
                         <div className={styles.modal_body}>

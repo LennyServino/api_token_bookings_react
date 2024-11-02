@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { login } from '../services/loginServices';
 import { useNavigate } from 'react-router-dom';
@@ -19,13 +19,11 @@ export default function Login() {
             sessionStorage.setItem('token_bookings', response.token)
         }
         
-        //validar que si existe el token
+        console.log(response);
+
         if(sessionStorage.getItem('token_bookings')) {
             navigate('/alojamientos')
         }
-
-        console.log(response);
-        
     }
 
     return (

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  getAccomodations,
-  postBooking,
-} from "../../services/accomodationServices";
+import { getAccomodations } from "../../services/accomodationServices";
+import { postBooking } from "../../services/bookingServices";
 import "../../styles/NewBookingModal.css";
 
 export const NewBookingModal = ({ onClose }) => {

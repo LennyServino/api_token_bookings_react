@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css"; // Importa los estilos predeterminados
+import styles from "./Calendar.module.css"; // Importa los estilos personalizados
 
 const localizer = momentLocalizer(moment);
 const token = sessionStorage.getItem("token_bookings");
@@ -28,9 +30,10 @@ const fetchBookings = async (accommodationId) => {
     }
 
     return response.data.map((booking) => ({
-      title: `${moment(booking.check_in_date).format('YYYY-MM-DD')} - Reservation for ${booking.user} - ${booking.accomodation}`,
-      start: moment(booking.check_in_date).toDate(),
-      end: moment(booking.check_out_date).toDate(),
+      title: `Reservation for ${booking.user}`,
+      start: moment.utc(booking.check_in_date).toDate(),
+      end: moment.utc(booking.check_out_date).toDate(),
+      status: booking.status, // Asegúrate de que el estado está en el objeto booking
     }));
   } catch (error) {
     console.error("Error fetching bookings:", error.response?.data || error.message);
@@ -43,7 +46,7 @@ const MyCalendar = () => {
   const [accommodationId, setAccommodationId] = useState("default_id");
 
   useEffect(() => {
-     console.log("Token:", token); // Verifica si el token es válido
+    console.log("Token:", token); // Verifica si el token es válido
     const fetchData = async () => {
       if (accommodationId) {
         const fetchedEvents = await fetchBookings(accommodationId);
@@ -55,34 +58,45 @@ const MyCalendar = () => {
   }, [accommodationId]);
 
   const eventPropGetter = (event) => {
-    const startDate = moment(event.start).format("YYYY-MM-DD");
-    const endDate = moment(event.end).format("YYYY-MM-DD");
+    let className = "";
+    if (event.status === "completed") {
+      className = styles.completed;
+    } else if (event.status === "pending") {
+      className = styles.pending;
+    } else if (event.status === "cancelled") {
+      className = styles.cancelled;
+    }
 
     return {
-      style: {
-        backgroundColor: `#646cffaa`, // Light background for booked dates
-        border: "1px solid #ccc",
-        borderRadius: 2,
-        padding: "5px",
-        margin: "5px 0",
-        // Add more styles as needed
-      },
-      title: (
-        <span>
-          {event.title} - {startDate} to {endDate}
-        </span>
-      ),
+      className,
     };
   };
 
   return (
-    <Calendar
-      localizer={localizer}
-      events={events}
-      startAccessor="start"
-      endAccessor="end"
-      eventPropGetter={eventPropGetter}
-    />
+    <div className={styles.container}>
+      <h1>My Calendar</h1>
+      <div className={styles.calendar}>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          eventPropGetter={eventPropGetter}
+          views={["month", "week", "day"]}
+          defaultView="month"
+          popup
+          components={{
+            event: ({ event }) => (
+              <span>
+                <strong>{event.title}</strong>
+                <br />
+                {moment(event.start).format("YYYY-MM-DD")} - {moment(event.end).format("YYYY-MM-DD")}
+              </span>
+            ),
+          }}
+        />
+      </div>
+    </div>
   );
 };
 

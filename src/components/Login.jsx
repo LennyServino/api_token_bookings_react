@@ -3,31 +3,44 @@ import { useForm } from 'react-hook-form'
 import { login } from '../services/loginServices';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 //importando icons
-import { FaSignInAlt, FaKey, FaLock, FaEnvelope  } from "react-icons/fa";
+import { FaSignInAlt, FaKey, FaLock, FaEnvelope, FaQuestionCircle  } from "react-icons/fa";
 import { IoInformationCircle } from "react-icons/io5";
-import { IoIosMail } from "react-icons/io";
+
+const schema = yup.object().shape({
+    email: yup.string().required("El correo es obligatorio").email("Correo Invalido, ejemplo: usuario@dominio.com"),
+    password: yup.string().required("Campo Obligatorio").min(8, "La contraseña debe contener al menos 8 caracteres")
+})
 
 export default function Login() {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(schema)
+    })
 
     const navigate = useNavigate()
+
+    const [isLoading, setIsLoading] = React.useState(false)
 
     //metodo para validar el usuario
     const loginForm = async (data) => {
         //console.log(data);
+        setIsLoading(true)
 
         const response = await login(data);
         //validando la respuesta del login
         if(response?.token) {
             //si esta autorizado guardamos el token en el sessionStorage
             sessionStorage.setItem('token_bookings', response.token)
+            sessionStorage.setItem('user_email_bookings', response.user)
         }
         
         console.log(response);
 
         if(sessionStorage.getItem('token_bookings')) {
+            setIsLoading(false)
             navigate('/alojamientos')
         }
     }
@@ -42,8 +55,11 @@ export default function Login() {
                         <label htmlFor="">Correo</label>
                         <div className={styles.input_container}>
                             <FaEnvelope className={styles.input_icon} />
-                            <input type="email" {...register('email')} placeholder='correo@ejemplo.com' />
+                            <input type="email" {...register('email', {required: true})} placeholder='correo@ejemplo.com' />
                         </div>
+                        <p className={styles.error_message}>
+                            {errors.email && errors.email.message}
+                        </p>
                     </div>
                     <div className={styles.input_box}>
                         <div className={styles.password_box}>
@@ -52,13 +68,33 @@ export default function Login() {
                         </div>
                         <div className={styles.input_container}>
                             <FaLock className={styles.input_icon} />
-                            <input type="password" {...register('password')} placeholder='••••••••' />
+                            <input type="password" {...register('password', {required: true})} placeholder='••••••••' />
                         </div>
+                        <p className={`${styles.error_message}`}>
+                            {errors.password && errors.password.message}
+                        </p>
+                    </div>
+                    <div className={styles.checkbox_container}>
+                        <input type="checkbox" id='holdSession' />
+                        <label htmlFor="holdSession">Mantener la sesión iniciada</label>
                     </div>
                     <div className={styles.btn_box}>
-                        <button type="submit"><FaSignInAlt /> Iniciar Sesion</button>
+                        <button type="submit">
+                            {
+                                isLoading ? <span className={styles.spinner}></span> : 
+                                <span>
+                                    <FaSignInAlt /> Iniciar Sesion
+                                </span>
+                            }
+                        </button>
                     </div>
                 </form>
+                <div className={styles.help_box}>
+                    <p>
+                        <FaQuestionCircle /> ¿Necesitas ayuda?
+                    </p>
+                    <span>Contacta soporte</span>
+                </div>
             </div>
         </div>
     )

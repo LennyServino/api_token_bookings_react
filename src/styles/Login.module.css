@@ -19,6 +19,7 @@
 .login_content {
     display: flex;
     background: white;
+    box-shadow: 0px 3px 5px 1px rgba(156,163,175,1);
     border-radius: 5px;
     max-width: 25rem;
     padding: 2rem 1.5rem;
@@ -92,6 +93,12 @@
     color: #9CA3AF;
 }
 
+.error_message {
+    color: red !important;
+    padding: 0 .5rem;
+    margin: 0;
+}
+
 .password_box {
     display: flex;
     justify-content: space-between;
@@ -113,6 +120,23 @@
     align-items: center;
 }
 
+.checkbox_container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.checkbox_container input {
+    cursor: pointer;
+    transform: scale(1.4);
+}
+
+.checkbox_container label {
+    color: var(--primary-text-color);
+    font-weight: 400;
+    cursor: pointer;
+}
+
 .btn_box button {
     border: none;
     border-radius: 4px;
@@ -132,4 +156,65 @@
 
 .btn_box button svg {
     vertical-align: top;
+}
+
+.help_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.help_box p svg {
+    color: var(--primary-text-color);
+}
+
+.help_box span {
+    color: var(--information-color);
+    cursor: pointer;
+}
+
+/* Spinner del boton del login */
+.spinner {
+    border: 4px solid rgba(187, 185, 185, 0.1);
+    border-left-color: #fff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login_content {
+        padding: 3rem 0rem;
+        max-width: 90%;
+    }
+
+    .login_content h1 {
+        font-size: 1.8rem;
+    }
+
+    .login_content p {
+        text-align: center;
+    }
+
+    .login_content form {
+        gap: 2rem;
+    }
+
+    .input_container input {
+        padding: 1rem 2rem;
+    }
+
+    .btn_box button {
+        padding: 1rem;
+    }
 }

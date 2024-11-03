@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAccomodations } from "../../services/accomodationServices";
 import { postBooking } from "../../services/bookingServices";
+import { getUsers } from "../../services/userServices";
 import "../../styles/NewBookingModal.css";
 
 export const NewBookingModal = ({ onClose }) => {
   const [accomodations, setAccomodations] = useState([]);
+  const [users, setUsers] = useState([]);
   const [selectedAccomodation, setSelectedAccomodation] = useState("");
   const [guest, setGuest] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -14,6 +16,9 @@ export const NewBookingModal = ({ onClose }) => {
   const fetchData = async () => {
     const response = await getAccomodations();
     setAccomodations(response);
+    const responseUsers = await getUsers();
+    setUsers(responseUsers);
+    //console.log(responseUsers);
   };
 
   useEffect(() => {
@@ -30,6 +35,9 @@ export const NewBookingModal = ({ onClose }) => {
   };
 
   const handleSave = async () => {
+    // Retrieve the user's email from sessionStorage
+    const userEmail = sessionStorage.getItem("user_email_bookings");
+
     const bookingData = {
       booking: generateBookingId(),
       check_in_date: startDate,
@@ -38,12 +46,14 @@ export const NewBookingModal = ({ onClose }) => {
       accomodation_id: accomodations.find(
         (item) => item.name === selectedAccomodation
       )?.id,
-      user_id: 1,
+      user_id: users.find((item) => item.email === userEmail)?.id,
     };
+
+    //console.log(bookingData);
 
     try {
       const response = await postBooking(bookingData);
-      console.log("Booking created successfully:", response);
+      //console.log("Booking created successfully:", response);
       onClose();
     } catch (error) {
       console.error("Error creating booking:", error);

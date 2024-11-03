@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import Swal from 'sweetalert2';
 
 //importando icons
 import { FaSignInAlt, FaKey, FaLock, FaEnvelope, FaQuestionCircle  } from "react-icons/fa";
@@ -30,11 +31,36 @@ export default function Login() {
         setIsLoading(true)
 
         const response = await login(data);
-        //validando la respuesta del login
-        if(response?.token) {
-            //si esta autorizado guardamos el token en el sessionStorage
-            sessionStorage.setItem('token_bookings', response.token)
-            sessionStorage.setItem('user_email_bookings', response.user)
+
+        try {
+            //validando la respuesta del login
+            if(response?.token) {
+                //si esta autorizado guardamos el token en el sessionStorage
+                sessionStorage.setItem('token_bookings', response.token)
+                sessionStorage.setItem('user_email_bookings', response.user)
+            } else {
+                throw new Error("Usuario o contraseña incorrectos")
+            }
+        } catch (error) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "Usuario o contraseña incorrectos"
+            });
+            console.log("este es un error");
+            
+        } finally {
+            setIsLoading(false)
         }
         
         console.log(response);

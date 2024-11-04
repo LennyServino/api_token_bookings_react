@@ -11,7 +11,7 @@ import { FaCalendarAlt, FaMoon } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 
 
-export default function BookingDetail({ isOpen, onClose, bookingId }) {
+export default function BookingDetail({ isOpen, onCloseDetail, bookingId }) {
     //estado para guardar una reserva en especifico
     const [booking, setBooking] = useState({})
 
@@ -81,7 +81,7 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
             <div className={styles.modal_content}>
                 <div className={styles.modal_header}>
                     <h2>Detalle de la reservacion</h2>
-                    <button type='button' className={styles.close_button} onClick={onClose} >X</button>
+                    <button type='button' className={styles.close_button} onClick={onCloseDetail} >X</button>
                 </div>
                 {
                     //si accomodation esta vacio no muestro el body del modal
@@ -147,7 +147,7 @@ export default function BookingDetail({ isOpen, onClose, bookingId }) {
                         </div>
                         <div className={styles.modal_footer}>
                             <button className={styles.cancel_button} onClick={handleUpdateStatus}>Cancelar Reservación</button>
-                            <button className={styles.close_button} onClick={onClose}>Cerrar</button>
+                            <button className={styles.close_button} onClick={onCloseDetail}>Cerrar</button>
                         </div>
                     </>   
                 }

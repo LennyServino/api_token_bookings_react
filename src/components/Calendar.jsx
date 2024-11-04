@@ -6,10 +6,13 @@ import moment from "moment";
 import "moment/locale/es"; // Importa el idioma español para moment
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { NewBookingModal } from "../components/modals/NewBookingModal";
-import styles from "./Calendar.module.css";
+
+import styles from '../styles/Calendar.module.css'
+import BookingDetail from "./BookingDetail";
 
 moment.locale("es"); // Configura moment en español
 const localizer = momentLocalizer(moment);
+
 const token = sessionStorage.getItem("token_bookings");
 
 // Traducciones para el calendario en español
@@ -36,6 +39,7 @@ const fetchBookings = async (accommodationId) => {
       return [];
     }
 
+
     const response = await axios.get(
       `https://apibookingsaccomodations-production.up.railway.app/api/V1/bookings`,
       {
@@ -52,6 +56,7 @@ const fetchBookings = async (accommodationId) => {
     }
 
     return response.data.map((booking) => ({
+      id: booking.id,
       title: `${booking.user} - ${booking.accomodation}`, // Muestra nombre completo y tipo de acomodación
       start: moment(booking.check_in_date).toDate(), // Usa check_in_date como fecha de inicio
       end: moment(booking.check_in_date).toDate(), // Usa check_in_date como fecha de fin
@@ -70,6 +75,25 @@ const MyCalendar = () => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [accommodationId] = useState("default_id");
+
+  //estado para abrir y cerrar el modal
+  const [isModalDetailOpen, setModalDetailOpen] = useState(false);
+  const [selectedBookingId, setSelectedBookingId] = useState(1);
+  const [isLoading, setIsLoading] = useState(true)
+
+  const openModalDetail = (bookingId) => {
+    setSelectedBookingId(bookingId);
+    //hacer que el fondo de la pagina no se pueda hacer scroll
+    document.body.style.overflow = 'hidden';
+    setModalDetailOpen(true)
+    
+  };
+
+  const closeModalDetail = () => {
+      setModalDetailOpen(false)
+      //hacer que el fondo de la pagina se pueda hacer scroll
+      document.body.style.overflow = 'auto';
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,7 +178,7 @@ const MyCalendar = () => {
           onNavigate={() => {}} // Deshabilita la navegación al hacer clic en las fechas
           components={{
             event: ({ event }) => (
-              <div className={styles.eventContent}>
+              <div className={styles.eventContent} onClick={() => openModalDetail(event.id)}>
                 <div className={styles.eventTitle}>{event.title}</div>
                 <div className={styles.eventAccommodation}>
                   {event.accommodation}
@@ -172,39 +196,9 @@ const MyCalendar = () => {
 
       {/* Modal para mostrar los detalles de la reserva */}
       {selectedEvent && (
-        <Modal
-          isOpen={!!selectedEvent}
-          onRequestClose={handleCloseModal}
-          contentLabel="Detalles de la Reservación"
-          className={styles.modal}
-          overlayClassName={styles.overlay}
-        >
-          <button className={styles.closeButton} onClick={handleCloseModal}>
-            X
-          </button>
-          <h2>Detalles de la Reservación</h2>
-          <p>
-            <strong>Usuario:</strong> {selectedEvent.user}
-          </p>
-          <p>
-            <strong>Tipo de Acomodación:</strong> {selectedEvent.accomodation}
-          </p>
-          <p>
-            <strong>Fecha de Entrada:</strong>{" "}
-            {moment(selectedEvent.check_in_date).format("YYYY-MM-DD")}
-          </p>
-          <p>
-            <strong>Fecha de Salida:</strong>{" "}
-            {moment(selectedEvent.check_out_date).format("YYYY-MM-DD")}
-          </p>
-          <p>
-            <strong>Monto Total:</strong> ${selectedEvent.total_amount}
-          </p>
-          <p>
-            <strong>Estado:</strong> {selectedEvent.status}
-          </p>
-        </Modal>
+        <div></div>
       )}
+      {isModalDetailOpen ? <BookingDetail isOpen={openModalDetail} onCloseDetail={closeModalDetail} bookingId={selectedBookingId} /> : ''}
       {isModalOpen && <NewBookingModal onClose={closeModal} />}
     </div>
   );

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 import { FaHome, FaCalendar, FaSignInAlt } from "react-icons/fa";
 
 const logOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user_email_bookings')
+    sessionStorage.removeItem('token_bookings')
+    sessionStorage.removeItem('user_email_bookings')
     window.location.href = '/'
 }
 

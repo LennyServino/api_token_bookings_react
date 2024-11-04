@@ -12,18 +12,33 @@ export const NewBookingModal = ({ onClose }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
+  const [error, setError] = useState("");
 
-  const fetchData = async () => {
-    const response = await getAccomodations();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const sessionToken = sessionStorage.getItem("token_bookings");
+      if (sessionToken) {
+        fetchData(sessionToken);
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const userEmail = sessionStorage.getItem("user_email_bookings");
+    const user = users.find((item) => item.email === userEmail);
+    if (user) {
+      setGuest(user.name); // Set the guest field to the user's name
+    }
+  }, [users]);
+
+  const fetchData = async (token) => {
+    const response = await getAccomodations(token);
     setAccomodations(response);
     const responseUsers = await getUsers();
     setUsers(responseUsers);
-    //console.log(responseUsers);
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const generateBookingId = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -35,7 +50,12 @@ export const NewBookingModal = ({ onClose }) => {
   };
 
   const handleSave = async () => {
-    // Retrieve the user's email from sessionStorage
+    setError("");
+    if (new Date(endDate) <= new Date(startDate)) {
+      setError("The check out date field must be a date after check in date.");
+      return;
+    }
+
     const userEmail = sessionStorage.getItem("user_email_bookings");
 
     const bookingData = {
@@ -49,12 +69,10 @@ export const NewBookingModal = ({ onClose }) => {
       user_id: users.find((item) => item.email === userEmail)?.id,
     };
 
-    //console.log(bookingData);
-
     try {
       const response = await postBooking(bookingData);
-      //console.log("Booking created successfully:", response);
       onClose();
+      window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Error creating booking:", error);
     }
@@ -92,10 +110,9 @@ export const NewBookingModal = ({ onClose }) => {
             type="text"
             className="text-input"
             name="guest"
-            placeholder="Ingrese nombre de huésped"
-            required
-            onChange={(e) => setGuest(e.target.value)}
-            value={guest}
+            placeholder="Nombre de huésped"
+            value={guest} // Set to the user's name
+            readOnly // Make the field read-only
           />
         </label>
 
@@ -123,6 +140,8 @@ export const NewBookingModal = ({ onClose }) => {
             />
           </label>
         </div>
+
+        {error && <p className="error-message">{error}</p>}
 
         <label className="label">
           Monto de reserva:

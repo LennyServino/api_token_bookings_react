@@ -1,0 +1,220 @@
+:root {
+    --primary-text-color: #374151;
+    --information-color: #3B82F6;
+}
+
+.login_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #F3F4F6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login_content {
+    display: flex;
+    background: white;
+    box-shadow: 0px 3px 5px 1px rgba(156,163,175,1);
+    border-radius: 5px;
+    max-width: 25rem;
+    padding: 2rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login_content h1 {
+    font-weight: 400;
+    margin: 0;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.login_content p {
+    color: #374151;
+}
+
+.login_content p svg {
+    color: var(--information-color);
+    vertical-align: bottom;
+}
+
+.login_content form {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+}
+
+.input_box {
+    box-sizing: border-box;
+}
+
+.input_box label {
+    color: var(--primary-text-color);
+    font-weight: 500;
+    padding-left: .2rem;
+}
+
+.input_container {
+    position: relative;
+}
+
+.input_icon {
+    font-size: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Ajusta esta distancia según el diseño */
+    transform: translateY(-25%);
+    color: #ccc;
+    pointer-events: none; /* Permite que el input sea clickeable sin interferencias */
+}
+
+.input_container input {
+    width: 100%;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 1em;
+    padding: .7rem 2rem;
+    box-sizing: border-box;
+    margin-top: .5rem;
+}
+
+.input_container input::placeholder {
+    color: #9CA3AF;
+}
+
+.error_message {
+    color: red !important;
+    padding: 0 .5rem;
+    margin: 0;
+}
+
+.password_box {
+    display: flex;
+    justify-content: space-between;
+    color: var(--information-color);
+}
+
+.password_box svg, span {
+    cursor: pointer;
+}
+
+.password_box svg {
+    font-size: .8em;
+    vertical-align: middle;
+}
+
+.btn_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox_container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.checkbox_container input {
+    cursor: pointer;
+    transform: scale(1.4);
+}
+
+.checkbox_container label {
+    color: var(--primary-text-color);
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.btn_box button {
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    padding: .8rem;
+    background-color: #111827;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color .3s;
+
+    &:hover {
+        background-color: #374151;
+    }
+}
+
+.btn_box button svg {
+    vertical-align: top;
+}
+
+.help_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.help_box p svg {
+    color: var(--primary-text-color);
+}
+
+.help_box span {
+    color: var(--information-color);
+    cursor: pointer;
+}
+
+/* Spinner del boton del login */
+.spinner {
+    border: 4px solid rgba(187, 185, 185, 0.1);
+    border-left-color: #fff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login_content {
+        padding: 3rem 0rem;
+        max-width: 90%;
+    }
+
+    .login_content h1 {
+        font-size: 1.8rem;
+    }
+
+    .login_content p {
+        text-align: center;
+    }
+
+    .login_content form {
+        gap: 2rem;
+    }
+
+    .input_container input {
+        padding: 1rem 2rem;
+    }
+
+    .btn_box button {
+        padding: 1rem;
+    }
+}

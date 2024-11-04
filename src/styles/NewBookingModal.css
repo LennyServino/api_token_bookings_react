@@ -1,0 +1,126 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  color: black;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: gray;
+}
+
+.label {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.select-input,
+.text-input,
+.date-input,
+.number-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  background-color: white;
+  margin-top: 5px;
+  box-sizing: border-box;
+  color: black;
+}
+
+.select-input::placeholder,
+.text-input::placeholder,
+.date-input::placeholder,
+.number-input::placeholder {
+  color: gray;
+}
+
+.date-fields {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background: none;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+
+.accept-button {
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .date-fields {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .accept-button,
+  .cancel-button {
+    width: 100%;
+  }
+}

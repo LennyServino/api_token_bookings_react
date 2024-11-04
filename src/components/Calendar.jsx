@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/es"; // Importa el idioma español para moment
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { NewBookingModal } from "../components/modals/NewBookingModal";
 import styles from "./Calendar.module.css";
 
 moment.locale("es"); // Configura moment en español
@@ -115,6 +116,10 @@ const MyCalendar = () => {
     setSelectedEvent(null); // Cierra el modal
   };
 
+  const [isModalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.titulo}>
@@ -122,10 +127,7 @@ const MyCalendar = () => {
           <h1>Reservaciones</h1>
         </div>
         <div>
-          <button
-            className={styles.addButton}
-            onClick={() => alert("Agregar Reservación")}
-          >
+          <button className={styles.addButton} onClick={openModal}>
             + Nueva Reservación
           </button>
         </div>
@@ -203,6 +205,7 @@ const MyCalendar = () => {
           </p>
         </Modal>
       )}
+      {isModalOpen && <NewBookingModal onClose={closeModal} />}
     </div>
   );
 };

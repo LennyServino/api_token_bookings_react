@@ -56,7 +56,6 @@ export default function Accomodations() {
 
     return (
         <div /* style={{background: 'black'}} */>
-            <button onClick={() => openModal(1)}>Abrir Modal</button>
             {/* validamos si la persona esta autenticada */}
             {
                 isLoading ? <LoadingSpinner /> :

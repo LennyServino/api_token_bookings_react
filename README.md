@@ -39,6 +39,17 @@ La aplicación cuenta con las siguientes características:
 **/alojamientos**: Visualiza, agrega y actualiza información sobre los alojamientos.<br/>
 **/calendario**: Consulta el calendario para ver y crear las reservaciones<br/>
 
+##Dependencias
+    "@types/react-big-calendar": "^1.15.0",<br/>
+    "api_token_bookings": "file:",<br/>
+    "axios": "^1.7.7",<br/>
+    "react": "^18.3.1",<br/>
+    "react-big-calendar": "^1.15.0",<br/>
+    "react-dom": "^18.3.1",<br/>
+    "react-hook-form": "^7.53.1",<br/>
+    "react-modal": "^3.16.1",<br/>
+    "react-router-dom": "^6.27.0"<br/>
+
 ## Autores
 Melvin Alexander González<br/>
 William Alexander Henríquez Zelaya<br/>

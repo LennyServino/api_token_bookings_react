@@ -35,8 +35,8 @@ La aplicación cuenta con las siguientes características:
 4. **Calendario**: Consulta el calendario para ver las reservaciones.
 
 ## Rutas del Proyecto
-**/login**: Visualiza, agrega y actualiza información sobre los alojamientos.
-**/alojamientos**:
+**/login**: Inicia sesión para acceder a las funcionalidades de la aplicación.
+**/alojamientos**: Visualiza, agrega y actualiza información sobre los alojamientos.
 **/calendario**: Consulta el calendario para ver y crear las reservaciones
 
 ## Autores

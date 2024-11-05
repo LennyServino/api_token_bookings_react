@@ -38,6 +38,7 @@ export default function Login() {
                 //si esta autorizado guardamos el token en el sessionStorage
                 sessionStorage.setItem('token_bookings', response.token)
                 sessionStorage.setItem('user_email_bookings', response.user)
+                localStorage.setItem('user_email_bookings', response.user)
             } else {
                 throw new Error("Usuario o contraseña incorrectos")
             }

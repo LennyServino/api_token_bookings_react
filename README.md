@@ -35,13 +35,13 @@ La aplicación cuenta con las siguientes características:
 4. **Calendario**: Consulta el calendario para ver las reservaciones.
 
 ## Rutas del Proyecto
-**/login**: Inicia sesión para acceder a las funcionalidades de la aplicación.
-**/alojamientos**: Visualiza, agrega y actualiza información sobre los alojamientos.
-**/calendario**: Consulta el calendario para ver y crear las reservaciones
+**/login**: Inicia sesión para acceder a las funcionalidades de la aplicación.<br/>
+**/alojamientos**: Visualiza, agrega y actualiza información sobre los alojamientos.<br/>
+**/calendario**: Consulta el calendario para ver y crear las reservaciones<br/>
 
 ## Autores
-Melvin Alexander González
-William Alexander Henríquez Zelaya
-Edwin Morataya
-Lenny Servino
-Iván Ernesto Calderón
+Melvin Alexander González<br/>
+William Alexander Henríquez Zelaya<br/>
+Edwin Morataya<br/>
+Lenny Servino<br/>
+Iván Ernesto Calderón<br/>

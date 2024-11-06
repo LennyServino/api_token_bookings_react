@@ -32,6 +32,7 @@ export default function Rutas() {
           </PrivateRoute>
         } /> 
 
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calendario" element={<Calendar/>} />
         <Route path="*" element={<Navigate to={user ? '/alojamientos' : '/login'} />} />

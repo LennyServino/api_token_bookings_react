@@ -9,6 +9,7 @@ import { BsFillGrid3X3GapFill } from "react-icons/bs";
 const logOut = () => {
     sessionStorage.removeItem('token_bookings')
     sessionStorage.removeItem('user_email_bookings')
+    localStorage.removeItem('user_email_bookings')
     window.location.href = '/'
 }
 

@@ -4,6 +4,13 @@ import BookingDetail from './BookingDetail'
 import LoadingSpinner from './LoadingSpinner'
 import styles from '../styles/Accomodations.module.css'
 
+//importando icons
+import { FaPlusCircle } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoInformationCircle } from "react-icons/io5";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+
 export default function Accomodations() {
     const [accomodations, setAccomodations] = useState([])
     //estado para verificar si el usuario esta autenticado
@@ -55,24 +62,31 @@ export default function Accomodations() {
     };
 
     return (
-        <div /* style={{background: 'black'}} */>
+        <div className={styles.container}>
             {/* validamos si la persona esta autenticada */}
             {
                 isLoading ? <LoadingSpinner /> :
                 isAuthenticated ? (
                     <>
-                        <BookingDetail isOpen={isModalOpen} onClose={closeModal} bookingId={selectedBookingId} />
-                        <h1>Lista de alojamientos</h1>
+                        <div className={styles.header_accomodations}>
+                            <h1>Lista de alojamientos</h1>
+                            <button><FaPlusCircle /> Nuevo Alojamiento</button>
+                        </div>
                         <div className={styles.card_box}>
                             {
                                 //mapeando los alojamientos
                                 accomodations.map((item) => {
                                     return (
-                                        <div key={item.id}>
-                                            <h3>{item.name} {item.id}</h3>
-                                            <img src={item.image} alt="" />
-                                            <p>Direccion: {item.address}</p>
-                                            <button onClick={() => openModal(item.id)}>Detalle</button>
+                                        <div className={styles.card} key={item.id}>
+                                            <section className={styles.information}>
+                                                <h3>{item.name} {item.id}</h3>
+                                                <p><FaLocationDot/> {item.address}</p>
+                                                <p className={styles.information_text}><IoInformationCircle /> {item.description}</p>
+                                            </section>
+                                            <section className={styles.actions}>
+                                                <span><FaPencilAlt /></span>
+                                                <span><FaTrashAlt /></span>
+                                            </section>
                                         </div>
                                     )
                                 })

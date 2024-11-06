@@ -13,6 +13,15 @@ import { IoMenu } from "react-icons/io5";
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    const userStorage = localStorage.getItem('user_email_bookings')
+    if(userStorage) {
+      setUser(userStorage)
+    }
+  }, [])
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
   }
@@ -20,18 +29,22 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <div className={stylesMenu.dashboard}>
-          <button className={stylesMenu.hamburger} onClick={toggleMenu}>
-            <IoMenu />
-          </button>
+        {
+          /* si el usuario esta muestro el dashboard */
+          user &&
+          <div className={stylesMenu.dashboard}>
+            <button className={stylesMenu.hamburger} onClick={toggleMenu}>
+              <IoMenu />
+            </button>
 
-          <Menu className={`${stylesMenu.menu} ${menuOpen ? stylesMenu.active : 'hidden'}`} />
+            <Menu className={`${stylesMenu.menu} ${menuOpen ? stylesMenu.active : 'hidden'}`} />
 
-          {/* contenedor del contenido */}
-          <div className={stylesMenu.content}>
-            <Rutas />
+            {/* contenedor del contenido */}
+            <div className={stylesMenu.content}>
+              <Rutas user={user} />
+            </div>
           </div>
-        </div>
+        }
       </BrowserRouter>
     </>
   )

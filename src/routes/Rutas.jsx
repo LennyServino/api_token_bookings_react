@@ -6,17 +6,7 @@ import Calendar from "../components/Calendar";
 import BookingDetail from "../components/BookingDetail";
 import PrivateRoute from "./privateRoute";
 
-export default function Rutas() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const userStorage = localStorage.getItem('user_email_bookings');
-    if(userStorage) {
-      setUser(userStorage);
-    }   
-  }, []);
-
-  if (user === null) return <Navigate to="/login" />;
+export default function Rutas({ user }) {
 
   return (
       <Routes>

@@ -45,6 +45,11 @@ function App() {
             </div>
           </div>
         }
+          
+        {
+          /* si no esta logueado muestro el login */
+          !user && <Login />
+        }
       </BrowserRouter>
     </>
   )

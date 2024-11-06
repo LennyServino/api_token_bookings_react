@@ -9,11 +9,13 @@ import { NewBookingModal } from "../components/modals/NewBookingModal";
 
 import styles from '../styles/Calendar.module.css'
 import BookingDetail from "./BookingDetail";
+import { set } from "react-hook-form";
+import LoadingSpinner from "./LoadingSpinner";
 
 moment.locale("es"); // Configura moment en español
 const localizer = momentLocalizer(moment);
 
-const token = sessionStorage.getItem("token_bookings");
+
 
 // Traducciones para el calendario en español
 const messages = {
@@ -31,8 +33,18 @@ const messages = {
   allDay: "Todo el día",
 };
 
+const waitForToken = async () => {
+  let token = sessionStorage.getItem("token_bookings");
+  while (!token) {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    token = sessionStorage.getItem("token_bookings");
+  }
+  return token;
+};
+
 const fetchBookings = async (accommodationId) => {
   try {
+    const token = await waitForToken();
     const formattedToken = token ? token.trim() : "";
     if (!formattedToken) {
       console.error("Token is missing or invalid");
@@ -79,6 +91,8 @@ const MyCalendar = () => {
   //estado para abrir y cerrar el modal
   const [isModalDetailOpen, setModalDetailOpen] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState(1);
+
+  //estado para el loading
   const [isLoading, setIsLoading] = useState(true)
 
   const openModalDetail = (bookingId) => {
@@ -100,6 +114,7 @@ const MyCalendar = () => {
       if (accommodationId) {
         const fetchedEvents = await fetchBookings(accommodationId);
         setEvents(fetchedEvents);
+        setIsLoading(false)
       }
     };
 
@@ -143,6 +158,10 @@ const MyCalendar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className={styles.container}>

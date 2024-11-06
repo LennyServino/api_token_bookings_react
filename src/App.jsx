@@ -21,7 +21,7 @@ function App() {
     const userStorage = localStorage.getItem('user_email_bookings')
     if(userStorage) {
       setUser(userStorage)
-    }
+    }    
   }, [])
 
   const toggleMenu = () => {

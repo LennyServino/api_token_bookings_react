@@ -6,17 +6,7 @@ import Calendar from "../components/Calendar";
 import BookingDetail from "../components/BookingDetail";
 import PrivateRoute from "./privateRoute";
 
-export default function Rutas() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const userStorage = localStorage.getItem('user_email_bookings');
-    if(userStorage) {
-      setUser(userStorage);
-    }   
-  }, []);
-
-  if(user === null) return null;
+export default function Rutas({ user }) {
 
   return (
       <Routes>
@@ -32,9 +22,10 @@ export default function Rutas() {
           </PrivateRoute>
         } /> 
 
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calendario" element={<Calendar/>} />
-        {/* <Route path="*" element={<Navigate to={user ? '/alojamientos' : '/login'} />} /> */}
+        <Route path="*" element={<Navigate to={user ? '/alojamientos' : '/login'} />} />
       </Routes>
   );
 }

@@ -34,7 +34,7 @@ export default function Rutas() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/calendario" element={<Calendar/>} />
-        <Route path="*" element={<Navigate to={user ? '/alojamientos' : '/login'} />} />
+        {/* <Route path="*" element={<Navigate to={user ? '/alojamientos' : '/login'} />} /> */}
       </Routes>
   );
 }

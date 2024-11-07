@@ -18,6 +18,35 @@ export default function Accomodations() {
 
     const [isLoading, setIsLoading] = useState(true)
 
+    //estado para la paginacion
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 10
+
+    const indexOfLastItem = currentPage * itemsPerPage
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage
+    const currentItems = accomodations.slice(indexOfFirstItem, indexOfLastItem)
+
+    const totalPages = Math.ceil(accomodations.length / itemsPerPage)
+
+    const handleNextPage = () => {
+        if(currentPage < totalPages) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+
+    const handlePrevPage = () => {
+        if(currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, [currentPage])
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -75,7 +104,7 @@ export default function Accomodations() {
                         <div className={styles.card_box}>
                             {
                                 //mapeando los alojamientos
-                                accomodations.map((item) => {
+                                currentItems.map((item) => {
                                     return (
                                         <div className={styles.card} key={item.id}>
                                             <section className={styles.information}>
@@ -84,13 +113,18 @@ export default function Accomodations() {
                                                 <p className={styles.information_text}><IoInformationCircle /> {item.description}</p>
                                             </section>
                                             <section className={styles.actions}>
-                                                <span><FaPencilAlt /></span>
-                                                <span><FaTrashAlt /></span>
+                                                <span className={styles.edit_accomodation}><FaPencilAlt /></span>
+                                                <span className={styles.delete_accomodation}><FaTrashAlt /></span>
                                             </section>
                                         </div>
                                     )
                                 })
                             }
+                        </div>
+                        <div className={styles.pagination}>
+                            <button onClick={handlePrevPage} disabled={ currentPage === 1 } >Anterior</button>
+                            <span>Pagina {currentPage} de {totalPages}</span>
+                            <button onClick={handleNextPage} disabled={ currentPage === totalPages } >Siguiente</button>
                         </div>
                     </>
                 ) : <h2>No estas autorizado, inicia sesion</h2>

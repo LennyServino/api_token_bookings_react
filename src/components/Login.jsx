@@ -64,7 +64,6 @@ export default function Login() {
             setIsLoading(false)
         }
         
-        console.log(response);
 
         if(sessionStorage.getItem('token_bookings')) {
             setIsLoading(false)

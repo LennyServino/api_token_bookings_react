@@ -75,6 +75,52 @@
     align-items: center;
 }
 
+.card .actions .edit_accomodation {
+    color: #2563EB;
+    transition: transform .3s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.card .actions .delete_accomodation {
+    color: #EF4444;
+    transition: transform .3s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.pagination button {
+    padding: .5rem 1rem;
+    background-color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color .3s, transform .3s;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: #333;
+    }
+
+    &:disabled {
+        background-color: #D1D5DB;
+        cursor: not-allowed;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .container {
         padding: 0 .5rem;
